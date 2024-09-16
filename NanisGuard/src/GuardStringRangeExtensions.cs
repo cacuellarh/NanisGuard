@@ -1,0 +1,112 @@
+﻿using System.Runtime.CompilerServices;
+using NanisGuard.src;
+
+namespace NanisGuard
+{
+    public static partial class GuardExtensions
+    {
+        //Min - Max length validations
+        public static int IntMaxLength(this IGuardValidation guardValidation,
+            int input,
+            int maxLength,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            )
+        {
+            string intToString = input.ToString();
+
+            if (intToString.Length > maxLength)
+            {
+                throw customException ??
+                    new ArgumentOutOfRangeException(message ?? $"El valor ingresado {input} excede el rango maximo de {maxLength} para la propiedad {parameterName}.");
+            }
+
+            return input;
+        }
+
+        public static int IntMinLength(this IGuardValidation guardValidation,
+            int input,
+            int minLegth,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            )
+        {
+            string intToString = input.ToString();
+            if (intToString.Length < minLegth)
+            {
+                throw customException ??
+                    new ArgumentOutOfRangeException(message ?? $"El valor ingresado {input} no tiene un rango minimo de {minLegth} para la propiedad {parameterName}.");
+            }
+
+            return input;
+        }
+        public static string StringMinLength(this IGuardValidation guardValidation,
+            string input,
+            int minLegth,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            )
+        {
+            if (input.Length < minLegth)
+            {
+                throw customException ?? 
+                    new ArgumentOutOfRangeException(message ?? $"El valor ingresado {input} no tiene un rango minimo de {minLegth} para la propiedad {parameterName}.");
+            }
+
+            return input;
+        }
+
+        public static string StringMaxLength(this IGuardValidation guardValidation,
+            string input,
+            int maxLegth,
+            [CallerArgumentExpression("input")] string parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            )
+        {
+            if (input.Length > maxLegth)
+            {
+                throw customException ??
+                    new ArgumentOutOfRangeException(message ?? $"El valor ingresado {input} excede el rango maximo de {maxLegth} para la propiedad {parameterName}.");
+            }
+
+            return input;
+        }
+
+        //Ranges
+
+        public static string StringLengthRange(this IGuardValidation guardValidation,
+            string input,
+            int minLegth,
+            int maxLegth,
+            [CallerArgumentExpression("input")] string parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            )
+        {
+            NanisGuardV.validation.StringMinLength(input, minLegth, parameterName,customException,message);
+            NanisGuardV.validation.StringMaxLength(input, maxLegth, parameterName, customException, message);
+
+            return input;
+        }
+
+        public static int IntLengthRange(this IGuardValidation guardValidation,
+            int input,
+            int minLegth,
+            int maxLegth,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            )
+        {
+            NanisGuardV.validation.IntMinLength(input, minLegth, parameterName, customException, message);
+            NanisGuardV.validation.IntMaxLength(input, maxLegth, parameterName, customException, message);
+
+            return input;
+        }
+
+    }
+}
