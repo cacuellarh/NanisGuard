@@ -5,7 +5,7 @@ namespace NanisGuard
 {
     public static partial class GuardExtensions
     {
-        public static string StringAsOnlyContainsLetters(this IGuardValidation guarValidation,
+        public static string StringOnlyContainsLetters(this IGuardValidation guarValidation,
             string input,
             Exception? customException = null,
             string? message = null,
@@ -49,5 +49,7 @@ namespace NanisGuard
 
             return input;
         }
+
+
     }
 }

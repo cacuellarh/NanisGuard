@@ -12,7 +12,7 @@ namespace Test
         {
             // Arrange
             int? num = null;
-            var res = NanisGuardV.validation.Null(num, nameof(num));
+            var res = NanisGuardV.validation.NotNull(num, nameof(num));
 
             Assert.IsNull(res);
 
@@ -22,7 +22,7 @@ namespace Test
         public void Null_ArgumentNotNull()
         {
             int? num = 9;
-            var res = NanisGuardV.validation.Null(num, nameof(num));
+            var res = NanisGuardV.validation.NotNull(num, nameof(num));
 
             Assert.IsNotNull(res);
         }
@@ -32,7 +32,7 @@ namespace Test
         public void Null_ArgumentWithCustomException()
         {
             int? num = null;
-            var res = NanisGuardV.validation.Null(num, nameof(num),customException:new CustomException());
+            var res = NanisGuardV.validation.NotNull(num, nameof(num),customException:new CustomException());
 
             Assert.IsNotNull(res);
         }

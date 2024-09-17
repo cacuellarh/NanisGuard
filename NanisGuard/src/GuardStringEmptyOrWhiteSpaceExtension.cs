@@ -5,12 +5,12 @@ namespace NanisGuard
 {
     public static partial class GuardExtensions
     {
-        public static string Empty<T>(this IGuardValidation guardValidation,
+        public static string Empty(this IGuardValidation guardValidation,
             string input,
             Exception customException = null,
-            string message = null,
+            string? message = null,
             [CallerArgumentExpression("input")] string? parameterName = null
-            ) where T : struct 
+            )
         {
             if (input.Length == 0 || input == string.Empty)
             {
@@ -20,18 +20,28 @@ namespace NanisGuard
             return input;
         }
 
-        public static string WhiteSpace<T>(this IGuardValidation guardValidation,
+        public static string WhiteSpace(this IGuardValidation guardValidation,
             string input,
             Exception customException = null,
-            string message = null,
+            string? message = null,
             [CallerArgumentExpression("input")] string? parameterName = null
-            ) where T : struct
+            )
         {
             if (string.IsNullOrWhiteSpace(input))
             {
                 throw customException ?? new ArgumentException($"El campo {parameterName} contiene un espacio en blanco no permitido.");
             }
 
+            return input;
+        }
+
+        public static T NotNullOrEmpty<T>(this IGuardValidation guardValidation,
+            T input
+            )
+        {
+            NanisGuardV.validation.NotNull<T>(input);
+            NanisGuardV.validation.Empty(input.ToString()!);
+            NanisGuardV.validation.WhiteSpace(input.ToString()!);
             return input;
         }
     }

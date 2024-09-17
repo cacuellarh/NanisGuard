@@ -7,6 +7,41 @@ namespace Test
     public class GuardStringRangeExtentionTest
     {
         [TestMethod]
+        public void NumberMax_ValidInput()
+        {
+            long number = 10;
+
+            var result = NanisGuardV.validation.NumberMax(number, 11);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(number, result);
+
+        }
+
+        [TestMethod]
+        public void NumberMin_ValidInput()
+        {
+            long number = 12;
+
+            var result = NanisGuardV.validation.NumberMin(number, 11);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(number, result);
+
+        }
+        [TestMethod]
+        public void LongMaxLength_ValidInputRange()
+        {
+            long fact = 12345678;
+
+            var result = NanisGuardV.validation.DigitMaxLength(fact, 9);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(fact, result);
+
+        }
+
+        [TestMethod]
         public void StringMaxLength_ValidInputRange()
         {
             string name = "camilo";
@@ -119,6 +154,42 @@ namespace Test
             int number = 1257777;
 
             var result = NanisGuardV.validation.IntMaxLength(number, 5);
+
+            Assert.IsNull(result);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void LongMaxLength_InvalidInputRange()
+        {
+            long fact = 1234567891011;
+
+            var result = NanisGuardV.validation.DigitMaxLength(fact, 9);
+
+            Assert.IsNull(result);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void NumberMax_InvalidInput()
+        {
+            long number = 15;
+
+            var result = NanisGuardV.validation.NumberMax(number, 11);
+
+            Assert.IsNull(result);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void NumberMin_InvalidInput()
+        {
+            long number = 15;
+
+            var result = NanisGuardV.validation.NumberMin(number, 10);
 
             Assert.IsNull(result);
 

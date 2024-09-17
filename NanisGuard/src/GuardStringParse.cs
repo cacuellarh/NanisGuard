@@ -5,7 +5,7 @@ namespace NanisGuard
 {
     public static partial class GuardExtensions
     {
-        public static string ValidateParseStringToInt(this IGuardValidation guardValidation,
+        public static int ValidateParseStringToInt(this IGuardValidation guardValidation,
             string input,
             [CallerArgumentExpression("input")] string? parameterName = null,
             Exception? customException = null,
@@ -18,10 +18,10 @@ namespace NanisGuard
                     $"El valor ingresado {input} no contiene un formato valido para convertir a la propiedad {parameterName} de tipo int.");
             }
 
-            return input;
+            return intParce;
         }
 
-        public static string ValidateParseStringToLong(this IGuardValidation guardValidation,
+        public static long ValidateParseStringToLong(this IGuardValidation guardValidation,
             string input,
             [CallerArgumentExpression("input")] string? parameterName = null,
             Exception? customException = null,
@@ -34,7 +34,23 @@ namespace NanisGuard
                     $"El valor ingresado {input} no contiene un formato valido para convertir a la propiedad {parameterName} de tipo Long.");
             }
 
-            return input;
+            return parsedValue;
+        }
+
+        public static DateTime ValidateParseStringToDate(this IGuardValidation guardValidation,
+            string input,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Exception? customException = null,
+            string? message = null)
+        {
+            if (!DateTime.TryParse(input, out DateTime dateParse))
+            {
+                throw customException ??
+                    new FormatException(message ??
+                    $"El valor ingresado {input} no contiene un formato valido para convertir a la propiedad {parameterName} de tipo fecha.");
+            }
+
+            return dateParse;
         }
     }
 }
