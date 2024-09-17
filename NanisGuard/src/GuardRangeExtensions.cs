@@ -167,15 +167,21 @@ namespace NanisGuard
             return input;
         }
 
-        public static int NumberRange(this IGuardValidation guardValidation,
-            int input,
+        public static T NumberRange<T>(this IGuardValidation guardValidation,
+            T input,
             int min,
-            int max
-            )
+            int max,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Exception? customException = null,
+            string? message = null
+            ) where T : INumber<T>
         {
-            NanisGuardV.validation.NumberMin(input, min);
-            NanisGuardV.validation.NumberMax(input, max);
-
+            if (input < T.CreateChecked(min) || input > T.CreateChecked(max))
+            {
+                throw customException ??
+                    new ArgumentOutOfRangeException(message ??
+                    $"El valor ingresado ({input}) no cumple con el rango establecido ({min} - {max}) para la propiedad ({parameterName}).");
+            }
             return input;
         }
 

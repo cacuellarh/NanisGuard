@@ -6,12 +6,13 @@ namespace Test
     [TestClass]
     public class GuardStringRangeExtentionTest
     {
+
         [TestMethod]
-        public void NumberMax_ValidInput()
+        public void NumberRange_ValidInput()
         {
             long number = 10;
 
-            var result = NanisGuardV.validation.NumberMax(number, 11);
+            var result = NanisGuardV.validation.NumberRange(number, 1,120);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(number, result);
@@ -194,5 +195,18 @@ namespace Test
             Assert.IsNull(result);
 
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void NumberRange_InvalidInput()
+        {
+            long number = 122;
+
+            var result = NanisGuardV.validation.NumberRange(number, 1, 120);
+
+            Assert.IsNull(result);
+
+        }
+
     }
 }
