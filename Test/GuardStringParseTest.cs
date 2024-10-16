@@ -9,6 +9,18 @@ namespace Test
     {
         [TestMethod]
         [ExpectedException(typeof(FormatException))]
+        public void String_ParseToDecimal_expectedFalse()
+        {
+            string number = "12314f5";
+
+            var result = NanisGuardV.validation.ValidateParseStringToDecimal(number);
+
+            Assert.IsNull(result);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FormatException))]
         public void String_NotParseToInt_expectedException()
         {
             string number = "1234gh";
@@ -60,6 +72,17 @@ namespace Test
             string number = "123445645645565";
 
             var result = NanisGuardV.validation.ValidateParseStringToLong(number);
+
+            Assert.IsNotNull(result);
+
+        }
+
+        [TestMethod]
+        public void String_ParseToDecimal_expectedTrue()
+        {
+            string number = "4.700,00";
+
+            var result = NanisGuardV.validation.ValidateParseStringToDecimal(number);
 
             Assert.IsNotNull(result);
 

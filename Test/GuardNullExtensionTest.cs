@@ -32,7 +32,7 @@ namespace Test
         public void Null_ArgumentWithCustomException()
         {
             int? num = null;
-            var res = NanisGuardV.validation.NotNull(num, nameof(num),customException:new CustomException());
+            var res = NanisGuardV.validation.NotNull(num, nameof(num), customException:() => new CustomException());
 
             Assert.IsNotNull(res);
         }

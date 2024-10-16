@@ -7,14 +7,16 @@ namespace NanisGuard
     {
         public static T NotNull<T>(this IGuardValidation guardValidation,
             T input,
-            string message = null,
             [CallerArgumentExpression("input")] string? parameterName = null,
-            Exception? customException = null
+            Func<Exception>? customException = null,
+            string? message = null
             )
         {
+           
             if (input is null)
-            { 
-                throw customException ?? new ArgumentNullException(parameterName);
+            {
+                throw customException?.Invoke() ??
+                    new ArgumentNullException(message ?? parameterName);
             }
 
             return input;

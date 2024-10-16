@@ -52,5 +52,27 @@ namespace NanisGuard
 
             return dateParse;
         }
+
+        public static Decimal ValidateParseStringToDecimal(this IGuardValidation guardValidation,
+            string input,
+            [CallerArgumentExpression("input")] string? parameterName = null,
+            Func<Exception>? customException = null,
+            string? message = null)
+        {
+            input = RemoveThousandsSeparator(input);
+
+            if (!Decimal.TryParse(input, out Decimal decimalParse))
+            {
+                throw customException?.Invoke() ??
+                    new FormatException(message ??
+                    $"El valor ingresado {input} no contiene un formato valido para convertir a la propiedad {parameterName} en formato decimal.");
+            }
+
+            return decimalParse;
+        }
+        private static string RemoveThousandsSeparator(string input)
+        {
+            return input.Replace(",", "");
+        }
     }
 }
